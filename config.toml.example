@@ -1,0 +1,8 @@
+model = "venues"
+
+sqltype = "mysql"
+sqlhost = ""
+sqlport = ""
+sqluser = ""
+sqlpass = ""
+sqlname = ""

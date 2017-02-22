@@ -1,13 +1,13 @@
 package main
 
 import (
-  "log"
-  "net/http"
+	"log"
+	"net/http"
 
-  "github.com/mgonzo/venues/route"
+	"github.com/mgonzo/venues/route"
 )
 
 func main() {
-  router := route.NewRouter()
-  log.Fatal(http.ListenAndServe(":8080", router))
+	router := route.NewRouter()
+	log.Fatal(http.ListenAndServe(":8080", router))
 }

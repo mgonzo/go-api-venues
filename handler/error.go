@@ -1,10 +1,10 @@
 package handler
 
 import (
-    "fmt"
-    "net/http"
+	"fmt"
+	"net/http"
 )
 
 func Error(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintln(w, "This page is an error.")
+	fmt.Fprintln(w, "This page is an error.")
 }

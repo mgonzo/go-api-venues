@@ -1,62 +1,59 @@
 package handler
 
 import (
-    "fmt"
-    "log"
-    "net/http"
-    "database/sql"
-    _ "github.com/go-sql-driver/mysql"
-    "encoding/json"
-    "github.com/mgonzo/venues/model"
+	"database/sql"
+	"encoding/json"
+	"fmt"
+	"github.com/mgonzo/venues/model"
+	"github.com/spf13/viper"
+	"log"
+	"net/http"
 )
 
 func Collection(w http.ResponseWriter, r *http.Request) {
-  // connect to db
-  db, err := sql.Open("mysql",
-  "calendar:hopeitsok@tcp(172.17.0.1:3306)/calendar")
 
-  if err != nil {
-    log.Fatal(err)
-  }
-  defer db.Close()
+	db, err := sql.Open(viper.GetString("sqltype"), connect())
 
-  // retrieve collection
-  // need a package to filter, sort and page results
-  // need a real Venue struct in a model file
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
 
-  var (
-    id int
-    name string
-  )
+	// retrieve collection
+	// need a package to filter, sort and page results
+	var (
+		id   int
+		name string
+	)
 
-  rows, err := db.Query("select id, name from venue")
-  if err != nil {
-    log.Fatal(err)
-  }
-  defer rows.Close()
+	rows, err := db.Query("select id, name from venue")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
 
-  var list []model.Venue
+	var list []model.Venue
 
-  for rows.Next() {
-    err := rows.Scan(&id, &name)
-    if err != nil {
-      log.Fatal(err)
-    }
+	for rows.Next() {
+		err := rows.Scan(&id, &name)
+		if err != nil {
+			log.Fatal(err)
+		}
 
-    var ven = model.Venue{
-      Id: id,
-      Name: name,
-    }
+		var ven = model.Venue{
+			Id:   id,
+			Name: name,
+		}
 
-    list = append(list, ven)
+		list = append(list, ven)
 
-  }
+	}
 
-  err = rows.Err()
-  if err != nil {
-    log.Fatal(err)
-  }
+	err = rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-  jobj, _ := json.Marshal(list)
-  fmt.Fprintln(w, string(jobj))
+	jobj, _ := json.Marshal(list)
+	fmt.Fprintln(w, string(jobj))
 }
