@@ -3,8 +3,10 @@ package handler
 import (
 	_ "github.com/go-sql-driver/mysql"
 
+	"database/sql"
 	"fmt"
 	"github.com/spf13/viper"
+	"log"
 )
 
 func config() {
@@ -29,4 +31,12 @@ func connect() string {
 	)
 
 	return connect
+}
+
+func dbconn() *sql.DB {
+	db, err := sql.Open(viper.GetString("sqltype"), connect())
+	if err != nil {
+		log.Fatal(err)
+	}
+	return db
 }

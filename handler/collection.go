@@ -1,22 +1,15 @@
 package handler
 
 import (
-	"database/sql"
 	"encoding/json"
 	"fmt"
 	"github.com/mgonzo/venues/model"
-	"github.com/spf13/viper"
 	"log"
 	"net/http"
 )
 
 func Collection(w http.ResponseWriter, r *http.Request) {
-
-	db, err := sql.Open(viper.GetString("sqltype"), connect())
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	db := dbconn()
 	defer db.Close()
 
 	// retrieve collection

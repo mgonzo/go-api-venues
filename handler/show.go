@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"database/sql"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -9,19 +8,14 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/mgonzo/venues/model"
-	"github.com/spf13/viper"
 )
 
 func Show(w http.ResponseWriter, r *http.Request) {
+	// validate?
 	vars := mux.Vars(r)
 	qualifier := vars["qualifier"]
 
-	db, err := sql.Open(viper.GetString("sqltype"), connect())
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
+	db := dbconn()
 	defer db.Close()
 
 	var (
