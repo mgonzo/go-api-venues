@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/spf13/viper"
 	"github.com/gorilla/mux"
 	"github.com/mgonzo/venues/model"
 )
@@ -24,7 +25,8 @@ func Show(w http.ResponseWriter, r *http.Request) {
 	)
 
 	query := fmt.Sprintf(
-		"select id, name from venue where id=%[1]s",
+		"select id, name from venue where %[1]s=%[2]s",
+		viper.GetString("qualifier"),
 		qualifier,
 	)
 
