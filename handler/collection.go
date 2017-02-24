@@ -1,16 +1,17 @@
 package handler
 
 import (
+	"github.com/mgonzo/config"
+	"github.com/mgonzo/venues/model"
 	"encoding/json"
 	"fmt"
-	"github.com/mgonzo/venues/model"
 	"log"
 	"net/http"
 )
 
 func Collection(w http.ResponseWriter, r *http.Request) {
-	table := table()
-	db := dbconn()
+	table := config.Table()
+	db := config.Dbconn()
 	defer db.Close()
 
 	// retrieve collection

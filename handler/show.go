@@ -1,14 +1,14 @@
 package handler
 
 import (
+	"github.com/mgonzo/config"
+	"github.com/mgonzo/venues/model"
+	"github.com/spf13/viper"
+	"github.com/gorilla/mux"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
-
-	"github.com/spf13/viper"
-	"github.com/gorilla/mux"
-	"github.com/mgonzo/venues/model"
 )
 
 func Show(w http.ResponseWriter, r *http.Request) {
@@ -16,8 +16,8 @@ func Show(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	qualifier := vars["qualifier"]
 
-	table := table()
-	db := dbconn()
+	table := config.Table()
+	db := config.Dbconn()
 	defer db.Close()
 
 	var (

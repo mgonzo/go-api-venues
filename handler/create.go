@@ -1,10 +1,11 @@
 package handler
 
 import (
+	"github.com/mgonzo/config"
+	"github.com/mgonzo/venues/model"
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"github.com/mgonzo/venues/model"
 	"log"
 	"net/http"
 	"time"
@@ -22,8 +23,8 @@ func Create(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
-	table := table()
-	db := dbconn()
+	table := config.Table()
+	db := config.Dbconn()
 	defer db.Close()
 
 	now := time.Now()
