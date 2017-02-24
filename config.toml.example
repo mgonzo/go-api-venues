@@ -1,4 +1,6 @@
-model = "venues"
+model = ""
+table = ""
+qualifier = "guid"
 
 sqltype = "mysql"
 sqlhost = ""

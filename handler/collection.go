@@ -2,7 +2,7 @@ package handler
 
 import (
 	"github.com/mgonzo/go-api-config"
-	"github.com/mgonzo/venues/model"
+	"github.com/mgonzo/go-api-venues/model"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -26,6 +26,8 @@ func Collection(w http.ResponseWriter, r *http.Request) {
 	var (
 		id   int
 		name string
+		phone model.Phone
+		city model.City
 	)
 
 	var list []model.Venue
@@ -39,6 +41,8 @@ func Collection(w http.ResponseWriter, r *http.Request) {
 		var ven = model.Venue{
 			Id:   id,
 			Name: name,
+			Phone: phone,
+			City: city,
 		}
 
 		list = append(list, ven)

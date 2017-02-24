@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/mgonzo/venues/route"
+	"github.com/mgonzo/go-api-venues/route"
 )
 
 func main() {

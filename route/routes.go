@@ -2,7 +2,7 @@ package route
 
 import (
 	"fmt"
-	"github.com/mgonzo/venues/handler"
+	"github.com/mgonzo/go-api-venues/handler"
 )
 
 var model = "venues"

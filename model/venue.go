@@ -1,9 +1,10 @@
 package model
 
 type Venue struct {
-	Id       int    `json:"id"`
+	Id       int
+	Uuid	 string  `json:"uuid"`
 	Name     string `json:"name"`
 	Timezone string `json:"timezone"`
-	Zip      int    `json:"zip"`
+	City	 City `json:"city"`
 	Phone    Phone
 }

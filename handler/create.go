@@ -2,7 +2,7 @@ package handler
 
 import (
 	"github.com/mgonzo/go-api-config"
-	"github.com/mgonzo/venues/model"
+	"github.com/mgonzo/go-api-venues/model"
 	"database/sql"
 	"encoding/json"
 	"fmt"
@@ -46,7 +46,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 		now.Unix(),
 		v.Name,
 		timezone(db, v.Timezone),
-		city(db, v.Zip),
+		city(db, v.City.Zip),
 	)
 
 	insert := fmt.Sprintf("%[1]s %[2]s %[3]s", stmt, cols, vals)
@@ -92,6 +92,7 @@ func timezone(db *sql.DB, location string) int {
 
 func city(db *sql.DB, zip int) int {
 	cityq := fmt.Sprintf("select id from city where zip='%[1]d'", zip)
+	// log.Fatal(cityq);
 	city, err := db.Query(cityq)
 	if err != nil {
 		log.Fatal(err)
