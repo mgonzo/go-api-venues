@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"github.com/mgonzo/config"
+	"github.com/mgonzo/go-api-config"
 	"github.com/mgonzo/venues/model"
 	"database/sql"
 	"encoding/json"
