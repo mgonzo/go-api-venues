@@ -16,6 +16,7 @@ func Show(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	qualifier := vars["qualifier"]
 
+	table := table()
 	db := dbconn()
 	defer db.Close()
 
@@ -25,7 +26,8 @@ func Show(w http.ResponseWriter, r *http.Request) {
 	)
 
 	query := fmt.Sprintf(
-		"select id, name from venue where %[1]s=%[2]s",
+		"select id, name from %[1]s where %[2]s=%[3]s",
+		table,
 		viper.GetString("qualifier"),
 		qualifier,
 	)

@@ -1,39 +1,19 @@
 package route
 
 import (
-	"bytes"
 	"fmt"
 	"github.com/mgonzo/venues/handler"
-	"github.com/spf13/viper"
 )
 
-func config() string {
-	viper.SetConfigType("toml")
-	viper.SetConfigName("config")
-	viper.AddConfigPath("./")
-	err := viper.ReadInConfig()
-	if err != nil {
-		panic(fmt.Errorf("Fatal error config file: %s \n", err))
-	}
-	return viper.GetString("model")
-}
+var model = "venues"
 
 func base(model string) string {
-	var buffer bytes.Buffer
-	buffer.WriteString("/")
-	buffer.WriteString(model)
-	return buffer.String()
+	return fmt.Sprintf("/%[1]s", model)
 }
 
 func qualifier(model string) string {
-	var pattern = base(model)
-	var buffer bytes.Buffer
-	buffer.WriteString(pattern)
-	buffer.WriteString("/{qualifier}")
-	return buffer.String()
+	return fmt.Sprintf("/%[1]s/{qualifier}", model)
 }
-
-var model = config()
 
 var routes = Routes{
 	Route{

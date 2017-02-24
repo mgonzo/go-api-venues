@@ -20,7 +20,6 @@ func config() {
 }
 
 func connect() string {
-	config()
 	connect := fmt.Sprintf(
 		"%[1]s:%[2]s@tcp(%[3]s:%[4]s)/%[5]s",
 		viper.GetString("sqluser"),
@@ -34,9 +33,16 @@ func connect() string {
 }
 
 func dbconn() *sql.DB {
-	db, err := sql.Open(viper.GetString("sqltype"), connect())
+	config()
+	connstr := connect()
+	db, err := sql.Open(viper.GetString("sqltype"), connstr)
 	if err != nil {
 		log.Fatal(err)
 	}
 	return db
+}
+
+func table() string {
+	config()
+	return viper.GetString("table")
 }

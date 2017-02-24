@@ -9,21 +9,23 @@ import (
 )
 
 func Collection(w http.ResponseWriter, r *http.Request) {
+	table := table()
 	db := dbconn()
 	defer db.Close()
 
 	// retrieve collection
 	// need a package to filter, sort and page results
-	var (
-		id   int
-		name string
-	)
-
-	rows, err := db.Query("select id, name from venue")
+	query := fmt.Sprintf("select id, name from %[1]s", table)
+	rows, err := db.Query(query)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer rows.Close()
+
+	var (
+		id   int
+		name string
+	)
 
 	var list []model.Venue
 

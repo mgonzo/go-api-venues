@@ -22,6 +22,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
+	table := table()
 	db := dbconn()
 	defer db.Close()
 
@@ -29,7 +30,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 
 	// get constraints
 	// Build the insert string
-	table := fmt.Sprintf("insert into %[1]s", "venue")
+	stmt := fmt.Sprintf("insert into %[1]s", table)
 
 	cols := fmt.Sprintf(
 		"(%[1]s, %[2]s, %[3]s, %[4]s)",
@@ -47,7 +48,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 		city(db, v.Zip),
 	)
 
-	insert := fmt.Sprintf("%[1]s %[2]s %[3]s", table, cols, vals)
+	insert := fmt.Sprintf("%[1]s %[2]s %[3]s", stmt, cols, vals)
 	log.Println(insert)
 
 	// insert a new record
@@ -107,7 +108,7 @@ func city(db *sql.DB, zip int) int {
 }
 
 func phone(db *sql.DB, venue_id int64, p model.Phone) int64 {
-	table := fmt.Sprintf("insert into %[1]s", "phone")
+	stmt := fmt.Sprintf("insert into %[1]s", "phone")
 
 	cols := fmt.Sprintf(
 		"(%[1]s, %[2]s, %[3]s, %[4]s)",
@@ -125,7 +126,7 @@ func phone(db *sql.DB, venue_id int64, p model.Phone) int64 {
 		p.Number,
 	)
 
-	insert := fmt.Sprintf("%[1]s %[2]s %[3]s", table, cols, vals)
+	insert := fmt.Sprintf("%[1]s %[2]s %[3]s", stmt, cols, vals)
 	log.Println(insert)
 
 	// insert a new record
